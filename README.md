@@ -16,7 +16,9 @@
             background: radial-gradient(circle, #1a0000 0%, #000000 100%);
             color: white;
             font-family: 'Roboto', sans-serif;
-            height: 100vh;
+            /* Menggunakan dvh (dynamic viewport height) untuk akurasi di mobile */
+            height: 100dvh;
+            width: 100vw;
             margin: 0;
             overflow: hidden;
             display: flex;
@@ -34,13 +36,13 @@
             padding: 8px 16px;
             cursor: pointer;
             transition: transform 0.1s linear, background 0.2s;
-            min-width: 140px;
-            max-width: 180px;
+            min-width: 130px;
+            max-width: 160px;
             clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
             text-align: center;
             user-select: none;
-            z-index: 10;
-            font-size: 0.875rem;
+            z-index: 50; /* Memastikan di atas arena */
+            font-size: 0.75rem;
             word-wrap: break-word;
         }
 
@@ -62,23 +64,25 @@
         .hex-button.wrong { background: #ff0000 !important; color: white !important; }
 
         .question-box {
-            width: 90%;
-            max-width: 800px;
-            background: rgba(0, 0, 0, 0.85);
+            width: 92%;
+            max-width: 700px;
+            background: rgba(0, 0, 0, 0.9);
             border: 2px solid var(--death-red);
-            padding: 20px;
+            padding: 15px;
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
-            z-index: 5;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+            z-index: 100; /* Di depan jawaban agar tidak tertutup */
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
             pointer-events: auto;
+            margin-top: -20px;
         }
 
         @media (min-width: 768px) {
             .question-box {
                 padding: 30px;
                 font-size: 1.4rem;
+                margin-top: 0;
             }
         }
 
@@ -89,7 +93,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 50;
+            z-index: 200;
         }
 
         #timer-bar {
@@ -103,32 +107,31 @@
             position: fixed;
             top: 15px;
             left: 15px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--death-red);
-            z-index: 40;
+            z-index: 150;
         }
 
         .score-display {
             position: fixed;
             top: 15px;
             right: 15px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: var(--m-gold);
-            z-index: 40;
+            z-index: 150;
         }
 
         @media (min-width: 768px) {
             .lives-display, .score-display {
                 font-size: 1.5rem;
-                top: 20px;
+                top: 25px;
             }
         }
 
-        /* Modal Pop-up Styling */
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -146,9 +149,9 @@
         .modal-window {
             background: linear-gradient(180deg, #1a0000 0%, #000000 100%);
             border: 3px solid var(--death-red);
-            padding: 30px;
-            width: 90%;
-            max-width: 400px;
+            padding: 25px;
+            width: 85%;
+            max-width: 350px;
             text-align: center;
             box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
             transform: scale(0.8);
@@ -182,16 +185,13 @@
 </head>
 <body>
 
-    <!-- Bar Timer -->
     <div id="timer-ui" class="timer-container" style="display: none;">
         <div id="timer-bar"></div>
     </div>
 
-    <!-- Main Container -->
     <div id="game-app" class="w-full h-full relative overflow-hidden flex flex-col items-center justify-center">
         
-        <!-- Menu Utama -->
-        <div id="menu" class="text-center space-y-6 md:space-y-10 animate-pulse px-4">
+        <div id="menu" class="text-center space-y-6 md:space-y-10 animate-pulse px-4 z-[100]">
             <div>
                 <h1 class="text-4xl md:text-8xl font-black tracking-tighter text-red-600">15 SECONDS</h1>
                 <h2 class="text-xl md:text-4xl font-bold text-white italic">TO DEATH</h2>
@@ -206,28 +206,27 @@
             </div>
         </div>
 
-        <!-- Gameplay UI -->
-        <div id="game-ui" style="display: none;" class="w-full h-full flex flex-col items-center justify-center">
+        <div id="game-ui" style="display: none;" class="w-full h-full flex flex-col items-center justify-center relative">
             <div class="lives-display font-bold" id="lives-text">LIVES: 3</div>
             <div class="score-display font-bold" id="score-text">CASH: $0</div>
-            <div id="countdown-text" class="timer-font text-4xl md:text-6xl fixed top-12 md:top-10 font-bold opacity-30">15.00</div>
+            <div id="countdown-text" class="timer-font text-4xl md:text-6xl fixed top-12 md:top-10 font-bold opacity-20 pointer-events-none">15.00</div>
 
             <div id="question" class="question-box"></div>
 
-            <div id="chaos-arena" class="w-full h-full absolute inset-0 pointer-events-none"></div>
+            <!-- Arena tempat tombol bergerak bebas -->
+            <div id="chaos-arena" class="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"></div>
         </div>
     </div>
 
-    <!-- Modal Game Over -->
     <div id="game-over-modal" class="modal-backdrop">
         <div class="modal-window">
             <h1 class="text-4xl font-black text-red-600 mb-2 timer-font">YOU DIED</h1>
-            <p class="text-gray-400 uppercase tracking-widest text-sm mb-6">Waktu Habis / Nyawa Habis</p>
+            <p class="text-gray-400 uppercase tracking-widest text-xs mb-6">Waktu Habis / Nyawa Habis</p>
             <div class="bg-black/50 border border-red-900 p-4 mb-6">
-                <p class="text-gray-400 text-xs">SKOR AKHIR</p>
-                <p id="final-score" class="text-3xl font-bold text-yellow-500">$0</p>
+                <p class="text-gray-400 text-[10px]">SKOR AKHIR</p>
+                <p id="final-score" class="text-2xl font-bold text-yellow-500">$0</p>
             </div>
-            <button onclick="resetToMenu()" class="hex-button relative !static w-full py-4 text-lg">RESPAWN</button>
+            <button onclick="resetToMenu()" class="hex-button relative !static w-full py-4 text-sm font-bold">RESPAWN</button>
         </div>
     </div>
 
@@ -373,7 +372,6 @@
         let answerButtons = [];
         let isGameActive = false;
 
-        // Inisialisasi awal
         document.addEventListener('DOMContentLoaded', resetToMenu);
 
         function startGame(category) {
@@ -394,8 +392,7 @@
             clearInterval(timerInterval);
             clearInterval(movementInterval);
             
-            // Atur UI
-            document.getElementById('menu').style.display = 'block';
+            document.getElementById('menu').style.display = 'flex';
             document.getElementById('game-ui').style.display = 'none';
             document.getElementById('timer-ui').style.display = 'none';
             document.getElementById('game-over-modal').classList.remove('show');
@@ -426,8 +423,7 @@
                 qBox.innerHTML = qData.q;
                 document.getElementById('lives-text').innerHTML = `LIVES: ${lives}`;
                 document.getElementById('score-text').innerHTML = `CASH: $${score.toLocaleString()}`;
-                document.getElementById('countdown-text').innerHTML = "15.00";
-
+                
                 if (qData.hidden === "Skor" || qData.hidden === "Cash") {
                     document.getElementById('score-text').innerHTML = `CASH: <span onclick="handleCorrectClick()" class="hidden-target text-white underline font-bold">$${score.toLocaleString()}</span>`;
                 } else if (qData.hidden === "Lives") {
@@ -441,9 +437,10 @@
                 qBox.innerText = qData.q;
                 document.getElementById('score-text').innerText = `CASH: $${score.toLocaleString()}`;
                 document.getElementById('lives-text').innerText = `LIVES: ${lives}`;
+                document.getElementById('countdown-text').innerText = "15.00";
             }
 
-            const speedFactor = window.innerWidth < 768 ? 5 : 8;
+            const speedFactor = window.innerWidth < 768 ? 4 : 7;
 
             qData.a.forEach((text, idx) => {
                 const btn = document.createElement('div');
@@ -501,14 +498,22 @@
         }
 
         function startMovement() {
+            const arena = document.getElementById('chaos-arena');
+            const arenaRect = arena.getBoundingClientRect();
+
             movementInterval = setInterval(() => {
                 answerButtons.forEach(b => {
                     b.pos.x += b.pos.vx;
                     b.pos.y += b.pos.vy;
-                    if (b.pos.x <= 0 || b.pos.x >= window.innerWidth - b.pos.width) b.pos.vx *= -1;
-                    if (b.pos.y <= 0 || b.pos.y >= window.innerHeight - b.pos.height) b.pos.vy *= -1;
-                    b.pos.x = Math.max(0, Math.min(b.pos.x, window.innerWidth - b.pos.width));
-                    b.pos.y = Math.max(0, Math.min(b.pos.y, window.innerHeight - b.pos.height));
+
+                    // Deteksi batas arena yang lebih akurat
+                    if (b.pos.x <= 0 || b.pos.x >= arenaRect.width - b.pos.width) b.pos.vx *= -1;
+                    if (b.pos.y <= 0 || b.pos.y >= arenaRect.height - b.pos.height) b.pos.vy *= -1;
+
+                    // Mengunci koordinat agar tidak pernah keluar
+                    b.pos.x = Math.max(0, Math.min(b.pos.x, arenaRect.width - b.pos.width));
+                    b.pos.y = Math.max(0, Math.min(b.pos.y, arenaRect.height - b.pos.height));
+
                     b.element.style.left = b.pos.x + 'px';
                     b.element.style.top = b.pos.y + 'px';
                 });
@@ -560,9 +565,11 @@
 
         window.onresize = () => {
             if (isGameActive) {
+                const arena = document.getElementById('chaos-arena');
+                const arenaRect = arena.getBoundingClientRect();
                 answerButtons.forEach(b => {
-                    b.pos.x = Math.min(b.pos.x, window.innerWidth - b.pos.width);
-                    b.pos.y = Math.min(b.pos.y, window.innerHeight - b.pos.height);
+                    b.pos.x = Math.min(b.pos.x, arenaRect.width - b.pos.width);
+                    b.pos.y = Math.min(b.pos.y, arenaRect.height - b.pos.height);
                 });
             }
         };
