@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>15 Seconds to Death (Chaos Edition)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -23,6 +23,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            touch-action: manipulation;
         }
 
         h1, .timer-font { font-family: 'Orbitron', sans-serif; }
@@ -31,14 +32,26 @@
             position: absolute; 
             background: linear-gradient(180deg, #2a0000 0%, #000000 100%);
             border: 2px solid var(--death-red);
-            padding: 10px 25px;
+            padding: 8px 16px;
             cursor: pointer;
             transition: transform 0.1s linear, background 0.2s;
-            min-width: 200px;
+            min-width: 140px;
+            max-width: 180px;
             clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
             text-align: center;
             user-select: none;
             z-index: 10;
+            font-size: 0.875rem;
+            word-wrap: break-word;
+        }
+
+        @media (min-width: 768px) {
+            .hex-button {
+                padding: 10px 25px;
+                min-width: 200px;
+                max-width: none;
+                font-size: 1rem;
+            }
         }
 
         .hex-button:hover {
@@ -50,25 +63,34 @@
         .hex-button.wrong { background: #ff0000 !important; color: white !important; }
 
         .question-box {
-            width: 85%;
+            width: 90%;
             max-width: 800px;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             border: 2px solid var(--death-red);
-            padding: 30px;
+            padding: 20px;
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             font-weight: bold;
             z-index: 5;
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+            pointer-events: auto;
+        }
+
+        @media (min-width: 768px) {
+            .question-box {
+                padding: 30px;
+                font-size: 1.4rem;
+            }
         }
 
         .timer-container {
             width: 100%;
-            height: 10px;
+            height: 6px;
             background: #333;
             position: fixed;
             top: 0;
             left: 0;
+            z-index: 50;
         }
 
         #timer-bar {
@@ -80,18 +102,27 @@
 
         .lives-display {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            font-size: 1.5rem;
+            top: 15px;
+            left: 15px;
+            font-size: 1rem;
             color: var(--death-red);
+            z-index: 40;
         }
 
         .score-display {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 1.5rem;
+            top: 15px;
+            right: 15px;
+            font-size: 1rem;
             color: var(--m-gold);
+            z-index: 40;
+        }
+
+        @media (min-width: 768px) {
+            .lives-display, .score-display {
+                font-size: 1.5rem;
+                top: 20px;
+            }
         }
 
         .game-over-screen {
@@ -103,6 +134,7 @@
             align-items: center;
             justify-content: center;
             z-index: 100;
+            padding: 20px;
         }
 
         @keyframes shake {
@@ -129,16 +161,18 @@
     <div id="game-app" class="w-full h-full relative overflow-hidden flex flex-col items-center justify-center">
         
         <!-- Main Menu -->
-        <div id="menu" class="text-center space-y-10 animate-pulse">
-            <h1 class="text-6xl md:text-8xl font-black tracking-tighter text-red-600 mb-2">15 SECONDS</h1>
-            <h2 class="text-3xl md:text-4xl font-bold text-white mt-0 italic">TO DEATH</h2>
-            <p class="text-gray-500 uppercase tracking-widest">Chaos Edition</p>
+        <div id="menu" class="text-center space-y-6 md:space-y-10 animate-pulse px-4">
+            <div>
+                <h1 class="text-4xl md:text-8xl font-black tracking-tighter text-red-600">15 SECONDS</h1>
+                <h2 class="text-xl md:text-4xl font-bold text-white italic">TO DEATH</h2>
+                <p class="text-xs md:text-sm text-gray-500 uppercase tracking-widest mt-2">Chaos Edition</p>
+            </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto pt-10">
-                <button onclick="startGame('tv')" class="hex-button relative !static w-64 mx-auto">TV SERIES</button>
-                <button onclick="startGame('brands')" class="hex-button relative !static w-64 mx-auto">BRANDS</button>
-                <button onclick="startGame('history')" class="hex-button relative !static w-64 mx-auto">HISTORY</button>
-                <button onclick="startGame('logic')" class="hex-button relative !static w-64 mx-auto text-yellow-500">LOGIKA</button>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto pt-6">
+                <button onclick="startGame('tv')" class="hex-button relative !static w-full sm:w-64 mx-auto">TV SERIES</button>
+                <button onclick="startGame('brands')" class="hex-button relative !static w-full sm:w-64 mx-auto">BRANDS</button>
+                <button onclick="startGame('history')" class="hex-button relative !static w-full sm:w-64 mx-auto">HISTORY</button>
+                <button onclick="startGame('logic')" class="hex-button relative !static w-full sm:w-64 mx-auto text-yellow-500">LOGIKA</button>
             </div>
         </div>
 
@@ -146,7 +180,7 @@
         <div id="game-ui" class="hidden w-full h-full flex flex-col items-center justify-center">
             <div class="lives-display font-bold" id="lives-text">LIVES: 3</div>
             <div class="score-display font-bold" id="score-text">CASH: $0</div>
-            <div id="countdown-text" class="timer-font text-6xl fixed top-10 font-bold opacity-30">15.00</div>
+            <div id="countdown-text" class="timer-font text-4xl md:text-6xl fixed top-12 md:top-10 font-bold opacity-30">15.00</div>
 
             <div id="question" class="question-box"></div>
 
@@ -157,8 +191,8 @@
 
         <!-- Game Over -->
         <div id="game-over" class="hidden game-over-screen">
-            <h1 class="text-7xl font-black text-red-700 mb-4">YOU DIED</h1>
-            <p id="final-score" class="text-3xl text-white mb-10">Total Skor: $0</p>
+            <h1 class="text-5xl md:text-7xl font-black text-red-700 mb-4 text-center">YOU DIED</h1>
+            <p id="final-score" class="text-xl md:text-3xl text-white mb-10">Total Skor: $0</p>
             <button onclick="location.reload()" class="hex-button relative !static w-64">RESPAWN</button>
         </div>
     </div>
@@ -219,7 +253,7 @@
         let currentIndex = 0;
         let score = 0;
         let lives = 3;
-        let timeLeft = 1500; // 15.00 detik
+        let timeLeft = 1500; 
         let timerInterval;
         let movementInterval;
         let answerButtons = [];
@@ -258,32 +292,41 @@
                 document.getElementById('score-text').innerText = `CASH: $${score.toLocaleString()}`;
             }
 
+            // Kecepatan gerak tombol disesuaikan berdasarkan ukuran layar
+            const speedFactor = window.innerWidth < 768 ? 5 : 8;
+
             qData.a.forEach((text, idx) => {
                 const btn = document.createElement('div');
                 btn.className = 'hex-button pointer-events-auto';
                 btn.innerHTML = text;
                 
+                // Masukkan ke DOM dulu untuk mendapatkan dimensinya
+                document.getElementById('chaos-arena').appendChild(btn);
+                const rect = btn.getBoundingClientRect();
+                
                 const pos = {
-                    x: Math.random() * (window.innerWidth - 200),
-                    y: Math.random() * (window.innerHeight - 100),
-                    vx: (Math.random() - 0.5) * 8, // Sedikit diperlambat agar lebih fair
-                    vy: (Math.random() - 0.5) * 8
+                    x: Math.random() * (window.innerWidth - rect.width),
+                    y: Math.random() * (window.innerHeight - rect.height),
+                    vx: (Math.random() - 0.5) * speedFactor,
+                    vy: (Math.random() - 0.5) * speedFactor,
+                    width: rect.width,
+                    height: rect.height
                 };
                 
                 btn.style.left = pos.x + 'px';
                 btn.style.top = pos.y + 'px';
                 
-                btn.onclick = () => {
+                btn.onclick = (e) => {
+                    e.stopPropagation();
                     if (qData.hidden) { handleWrongClick(btn); }
                     else if (idx === qData.c) { handleCorrectClick(btn); }
                     else { handleWrongClick(btn); }
                 };
 
-                document.getElementById('chaos-arena').appendChild(btn);
                 answerButtons.push({ element: btn, pos: pos });
             });
 
-            timeLeft = 1500; // Reset ke 15 detik
+            timeLeft = 1500;
             startTimer();
             startMovement();
         }
@@ -297,7 +340,7 @@
                 bar.style.width = (timeLeft / 15) + '%';
                 txt.innerText = (timeLeft / 100).toFixed(2);
 
-                if (timeLeft < 300) { // Bergetar di 3 detik terakhir
+                if (timeLeft < 300) { 
                     txt.classList.add('critical-time');
                 } else {
                     txt.classList.remove('critical-time');
@@ -315,8 +358,13 @@
                     b.pos.x += b.pos.vx;
                     b.pos.y += b.pos.vy;
 
-                    if (b.pos.x <= 0 || b.pos.x >= window.innerWidth - 200) b.pos.vx *= -1;
-                    if (b.pos.y <= 0 || b.pos.y >= window.innerHeight - 50) b.pos.vy *= -1;
+                    // Pantulan dinding yang lebih presisi
+                    if (b.pos.x <= 0 || b.pos.x >= window.innerWidth - b.pos.width) b.pos.vx *= -1;
+                    if (b.pos.y <= 0 || b.pos.y >= window.innerHeight - b.pos.height) b.pos.vy *= -1;
+
+                    // Batas pengaman koordinat
+                    b.pos.x = Math.max(0, Math.min(b.pos.x, window.innerWidth - b.pos.width));
+                    b.pos.y = Math.max(0, Math.min(b.pos.y, window.innerHeight - b.pos.height));
 
                     b.element.style.left = b.pos.x + 'px';
                     b.element.style.top = b.pos.y + 'px';
@@ -333,7 +381,7 @@
             setTimeout(() => {
                 currentIndex++;
                 nextQuestion();
-            }, 1000);
+            }, 800);
         }
 
         function handleWrongClick(btn) {
@@ -349,7 +397,7 @@
                     currentIndex++;
                     nextQuestion();
                 }
-            }, 1000);
+            }, 800);
         }
 
         function handleTimeOut() {
@@ -367,7 +415,7 @@
                     currentIndex++;
                     nextQuestion();
                 }
-            }, 1500);
+            }, 1200);
         }
 
         function updateLivesUI() {
@@ -385,6 +433,16 @@
             document.getElementById('game-over').classList.remove('hidden');
             document.getElementById('final-score').innerText = `Total Hadiah: $${score.toLocaleString()}`;
         }
+
+        // Handle resize to keep buttons in bounds
+        window.onresize = () => {
+            if (isGameActive) {
+                answerButtons.forEach(b => {
+                    b.pos.x = Math.min(b.pos.x, window.innerWidth - b.pos.width);
+                    b.pos.y = Math.min(b.pos.y, window.innerHeight - b.pos.height);
+                });
+            }
+        };
     </script>
 </body>
 </html>
