@@ -9,81 +9,95 @@
         :root {
             --death-red: #ff0000;
             --m-gold: #d4af37;
-            --m-blue: #000833;
         }
 
         body {
             background: radial-gradient(circle, #1a0000 0%, #000000 100%);
             color: white;
             font-family: 'Roboto', sans-serif;
-            /* Menggunakan dvh (dynamic viewport height) untuk akurasi di mobile */
-            height: 100dvh;
+            min-height: 100dvh;
             width: 100vw;
             margin: 0;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
             touch-action: manipulation;
         }
 
         h1, .timer-font { font-family: 'Orbitron', sans-serif; }
 
-        .hex-button {
-            position: absolute; 
+        /* Style Visual Tombol (Khas Millionaire) */
+        .hex-style {
             background: linear-gradient(180deg, #2a0000 0%, #000000 100%);
             border: 2px solid var(--death-red);
-            padding: 8px 16px;
+            padding: 12px 16px;
             cursor: pointer;
-            transition: transform 0.1s linear, background 0.2s;
-            min-width: 130px;
-            max-width: 160px;
+            transition: all 0.2s ease;
             clip-path: polygon(10% 0%, 90% 0%, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
             text-align: center;
             user-select: none;
-            z-index: 50; /* Memastikan di atas arena */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .hex-style:hover {
+            border-color: white;
+            box-shadow: 0 0 15px var(--death-red);
+            transform: scale(1.02);
+        }
+
+        /* Class khusus untuk tombol yang bergerak di arena */
+        .moving-button {
+            position: absolute;
+            min-width: 130px;
+            max-width: 160px;
             font-size: 0.75rem;
-            word-wrap: break-word;
+            z-index: 10;
         }
 
         @media (min-width: 768px) {
-            .hex-button {
-                padding: 10px 25px;
-                min-width: 200px;
-                max-width: none;
-                font-size: 1rem;
+            .moving-button {
+                min-width: 180px;
+                font-size: 0.9rem;
             }
         }
 
-        .hex-button:hover {
-            border-color: white;
-            box-shadow: 0 0 15px var(--death-red);
-        }
+        .correct { background: #00ff00 !important; color: black !important; border-color: white !important; }
+        .wrong { background: #ff0000 !important; color: white !important; }
 
-        .hex-button.correct { background: #00ff00 !important; color: black !important; border-color: white !important; }
-        .hex-button.wrong { background: #ff0000 !important; color: white !important; }
-
+        /* Box Pertanyaan */
         .question-box {
-            width: 92%;
-            max-width: 700px;
-            background: rgba(0, 0, 0, 0.9);
+            width: 95%;
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.95);
             border: 2px solid var(--death-red);
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             font-size: 1rem;
             font-weight: bold;
-            z-index: 100; /* Di depan jawaban agar tidak tertutup */
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
-            pointer-events: auto;
-            margin-top: -20px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            margin: 10px auto;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        @media (min-width: 768px) {
-            .question-box {
-                padding: 30px;
-                font-size: 1.4rem;
-                margin-top: 0;
-            }
+        /* Area Arena - Sesuai permintaan 600px zone */
+        #chaos-arena {
+            width: 100%;
+            max-width: 600px;
+            height: 550px; 
+            position: relative;
+            background: rgba(255, 0, 0, 0.05);
+            border: 1px dashed rgba(255, 0, 0, 0.2);
+            overflow: hidden;
+            margin: 0 auto;
+            pointer-events: auto;
         }
 
         .timer-container {
@@ -100,87 +114,54 @@
             height: 100%;
             background: var(--death-red);
             width: 100%;
-            transition: width 0.1s linear;
         }
 
         .lives-display {
-            position: fixed;
+            position: absolute;
             top: 15px;
             left: 15px;
             font-size: 0.9rem;
             color: var(--death-red);
-            z-index: 150;
         }
 
         .score-display {
-            position: fixed;
+            position: absolute;
             top: 15px;
             right: 15px;
             font-size: 0.9rem;
             color: var(--m-gold);
-            z-index: 150;
-        }
-
-        @media (min-width: 768px) {
-            .lives-display, .score-display {
-                font-size: 1.5rem;
-                top: 25px;
-            }
         }
 
         .modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            display: none;
         }
 
-        .modal-backdrop.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .modal-backdrop.show { display: flex; }
 
         .modal-window {
-            background: linear-gradient(180deg, #1a0000 0%, #000000 100%);
+            background: #000;
             border: 3px solid var(--death-red);
-            padding: 25px;
+            padding: 30px;
             width: 85%;
             max-width: 350px;
             text-align: center;
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
-            transform: scale(0.8);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .modal-backdrop.show .modal-window {
-            transform: scale(1);
         }
 
         @keyframes shake {
             0% { transform: translate(1px, 1px) rotate(0deg); }
             10% { transform: translate(-1px, -2px) rotate(-1deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            40% { transform: translate(1px, -1px) rotate(1deg); }
             50% { transform: translate(-1px, 2px) rotate(-1deg); }
         }
 
-        .critical-time {
-            animation: shake 0.5s infinite;
-            color: red !important;
-        }
-
-        .hidden-target {
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        .hidden-target:active { opacity: 0.5; }
+        .critical-time { animation: shake 0.5s infinite; color: red !important; }
+        .hidden-target { cursor: pointer; text-decoration: underline; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -189,44 +170,49 @@
         <div id="timer-bar"></div>
     </div>
 
-    <div id="game-app" class="w-full h-full relative overflow-hidden flex flex-col items-center justify-center">
+    <!-- UI Menu Utama (Refactored) -->
+    <div id="menu" class="flex flex-col items-center justify-center min-h-[90dvh] w-full max-w-xl px-6 py-10">
+        <div class="text-center mb-12 animate-pulse">
+            <h1 class="text-5xl md:text-7xl font-black text-red-600 tracking-tighter leading-none">15 SECONDS</h1>
+            <h2 class="text-2xl md:text-3xl text-white italic tracking-widest mt-2">TO DEATH</h2>
+            <div class="h-1 w-24 bg-red-600 mx-auto mt-4"></div>
+        </div>
+
+        <p class="text-gray-500 uppercase tracking-[0.3em] text-xs mb-8">Pilih Kategori Kematian Anda</p>
+
+        <div class="grid grid-cols-2 gap-x-6 gap-y-8 w-full">
+            <button onclick="startGame('tv')" class="hex-style w-full py-6 text-sm md:text-base">TV SERIES</button>
+            <button onclick="startGame('brands')" class="hex-style w-full py-6 text-sm md:text-base">BRANDS</button>
+            <button onclick="startGame('history')" class="hex-style w-full py-6 text-sm md:text-base">HISTORY</button>
+            <button onclick="startGame('logic')" class="hex-style w-full py-6 text-sm md:text-base text-yellow-500">LOGIKA</button>
+        </div>
         
-        <div id="menu" class="text-center space-y-6 md:space-y-10 animate-pulse px-4 z-[100]">
-            <div>
-                <h1 class="text-4xl md:text-8xl font-black tracking-tighter text-red-600">15 SECONDS</h1>
-                <h2 class="text-xl md:text-4xl font-bold text-white italic">TO DEATH</h2>
-                <p class="text-xs md:text-sm text-gray-500 uppercase tracking-widest mt-2">Chaos Edition</p>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto pt-6">
-                <button onclick="startGame('tv')" class="hex-button relative !static w-full sm:w-64 mx-auto">TV SERIES</button>
-                <button onclick="startGame('brands')" class="hex-button relative !static w-full sm:w-64 mx-auto">BRANDS</button>
-                <button onclick="startGame('history')" class="hex-button relative !static w-full sm:w-64 mx-auto">HISTORY</button>
-                <button onclick="startGame('logic')" class="hex-button relative !static w-full sm:w-64 mx-auto text-yellow-500">LOGIKA</button>
-            </div>
-        </div>
-
-        <div id="game-ui" style="display: none;" class="w-full h-full flex flex-col items-center justify-center relative">
-            <div class="lives-display font-bold" id="lives-text">LIVES: 3</div>
-            <div class="score-display font-bold" id="score-text">CASH: $0</div>
-            <div id="countdown-text" class="timer-font text-4xl md:text-6xl fixed top-12 md:top-10 font-bold opacity-20 pointer-events-none">15.00</div>
-
-            <div id="question" class="question-box"></div>
-
-            <!-- Arena tempat tombol bergerak bebas -->
-            <div id="chaos-arena" class="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"></div>
-        </div>
+        <p class="mt-12 text-gray-600 text-[10px] uppercase tracking-widest">Chaos Edition v2.0</p>
     </div>
 
+    <!-- UI Gameplay -->
+    <div id="game-ui" style="display: none;" class="w-full flex flex-col items-center py-4">
+        <div class="relative w-full max-w-[600px] h-12">
+            <div class="lives-display font-bold" id="lives-text">LIVES: 3</div>
+            <div class="score-display font-bold" id="score-text">CASH: $0</div>
+        </div>
+        
+        <div id="countdown-text" class="timer-font text-4xl font-bold opacity-30 my-2">15.00</div>
+
+        <div id="question" class="question-box"></div>
+
+        <div id="chaos-arena"></div>
+    </div>
+
+    <!-- Modal Game Over -->
     <div id="game-over-modal" class="modal-backdrop">
         <div class="modal-window">
-            <h1 class="text-4xl font-black text-red-600 mb-2 timer-font">YOU DIED</h1>
-            <p class="text-gray-400 uppercase tracking-widest text-xs mb-6">Waktu Habis / Nyawa Habis</p>
-            <div class="bg-black/50 border border-red-900 p-4 mb-6">
-                <p class="text-gray-400 text-[10px]">SKOR AKHIR</p>
-                <p id="final-score" class="text-2xl font-bold text-yellow-500">$0</p>
+            <h1 class="text-4xl font-black text-red-600 mb-4 timer-font">YOU DIED</h1>
+            <div class="bg-red-950/30 p-4 mb-6 border border-red-900">
+                <p class="text-gray-400 text-xs uppercase tracking-widest">Skor Akhir</p>
+                <p id="final-score" class="text-3xl font-bold text-yellow-500">$0</p>
             </div>
-            <button onclick="resetToMenu()" class="hex-button relative !static w-full py-4 text-sm font-bold">RESPAWN</button>
+            <button onclick="resetToMenu()" class="hex-style w-full py-4 font-black uppercase tracking-widest">Respawn</button>
         </div>
     </div>
 
@@ -372,8 +358,6 @@
         let answerButtons = [];
         let isGameActive = false;
 
-        document.addEventListener('DOMContentLoaded', resetToMenu);
-
         function startGame(category) {
             currentQuestions = [...triviaData[category]].sort(() => Math.random() - 0.5);
             document.getElementById('menu').style.display = 'none';
@@ -413,7 +397,8 @@
 
             clearInterval(timerInterval);
             clearInterval(movementInterval);
-            document.getElementById('chaos-arena').innerHTML = '';
+            const arena = document.getElementById('chaos-arena');
+            arena.innerHTML = '';
             answerButtons = [];
             
             const qData = currentQuestions[currentIndex];
@@ -425,13 +410,13 @@
                 document.getElementById('score-text').innerHTML = `CASH: $${score.toLocaleString()}`;
                 
                 if (qData.hidden === "Skor" || qData.hidden === "Cash") {
-                    document.getElementById('score-text').innerHTML = `CASH: <span onclick="handleCorrectClick()" class="hidden-target text-white underline font-bold">$${score.toLocaleString()}</span>`;
+                    document.getElementById('score-text').innerHTML = `CASH: <span onclick="handleCorrectClick()" class="hidden-target">$${score.toLocaleString()}</span>`;
                 } else if (qData.hidden === "Lives") {
-                    document.getElementById('lives-text').innerHTML = `<span onclick="handleCorrectClick()" class="hidden-target text-white underline font-bold">L</span>IVES: ${lives}`;
+                    document.getElementById('lives-text').innerHTML = `<span onclick="handleCorrectClick()" class="hidden-target text-white">L</span>IVES: ${lives}`;
                 } else if (qData.hidden === "TimerDot") {
-                    document.getElementById('countdown-text').innerHTML = `15<span onclick="handleCorrectClick()" class="hidden-target text-red-500 underline font-bold">.</span>00`;
+                    document.getElementById('countdown-text').innerHTML = `15<span onclick="handleCorrectClick()" class="hidden-target text-red-500">.</span>00`;
                 } else if (qData.hidden === "TimerOne") {
-                    document.getElementById('countdown-text').innerHTML = `<span onclick="handleCorrectClick()" class="hidden-target text-red-500 underline font-bold">1</span>5.00`;
+                    document.getElementById('countdown-text').innerHTML = `<span onclick="handleCorrectClick()" class="hidden-target text-red-500">1</span>5.00`;
                 }
             } else {
                 qBox.innerText = qData.q;
@@ -440,19 +425,20 @@
                 document.getElementById('countdown-text').innerText = "15.00";
             }
 
-            const speedFactor = window.innerWidth < 768 ? 4 : 7;
+            const speedFactor = window.innerWidth < 768 ? 4 : 6;
+            const arenaRect = arena.getBoundingClientRect();
 
             qData.a.forEach((text, idx) => {
                 const btn = document.createElement('div');
-                btn.className = 'hex-button pointer-events-auto';
+                // Gunakan hex-style untuk visual, dan moving-button untuk posisi absolute
+                btn.className = 'hex-style moving-button';
                 btn.innerHTML = text;
+                arena.appendChild(btn);
                 
-                document.getElementById('chaos-arena').appendChild(btn);
                 const rect = btn.getBoundingClientRect();
-                
                 const pos = {
-                    x: Math.random() * (window.innerWidth - rect.width),
-                    y: Math.random() * (window.innerHeight - rect.height),
+                    x: Math.random() * (arenaRect.width - rect.width),
+                    y: Math.random() * (arenaRect.height - rect.height),
                     vx: (Math.random() - 0.5) * speedFactor,
                     vy: (Math.random() - 0.5) * speedFactor,
                     width: rect.width,
@@ -482,7 +468,6 @@
                 timeLeft--;
                 const bar = document.getElementById('timer-bar');
                 const txt = document.getElementById('countdown-text');
-                
                 if (bar) bar.style.width = (timeLeft / 15) + '%';
                 
                 const qData = currentQuestions[currentIndex];
@@ -499,18 +484,15 @@
 
         function startMovement() {
             const arena = document.getElementById('chaos-arena');
-            const arenaRect = arena.getBoundingClientRect();
-
             movementInterval = setInterval(() => {
+                const arenaRect = arena.getBoundingClientRect();
                 answerButtons.forEach(b => {
                     b.pos.x += b.pos.vx;
                     b.pos.y += b.pos.vy;
 
-                    // Deteksi batas arena yang lebih akurat
                     if (b.pos.x <= 0 || b.pos.x >= arenaRect.width - b.pos.width) b.pos.vx *= -1;
                     if (b.pos.y <= 0 || b.pos.y >= arenaRect.height - b.pos.height) b.pos.vy *= -1;
 
-                    // Mengunci koordinat agar tidak pernah keluar
                     b.pos.x = Math.max(0, Math.min(b.pos.x, arenaRect.width - b.pos.width));
                     b.pos.y = Math.max(0, Math.min(b.pos.y, arenaRect.height - b.pos.height));
 
@@ -542,7 +524,7 @@
             clearInterval(movementInterval);
             lives--;
             updateLivesUI();
-            document.getElementById('question').innerHTML = "<span class='text-red-500'>WAKTU HABIS!</span>";
+            document.getElementById('question').innerHTML = "<span class='text-red-500 font-black uppercase tracking-tighter'>Waktu Habis!</span>";
             setTimeout(() => { if (lives <= 0) gameOver(); else { currentIndex++; nextQuestion(); } }, 1200);
         }
 
