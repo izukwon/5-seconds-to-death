@@ -193,7 +193,7 @@
         <div id="game-over" class="hidden game-over-screen">
             <h1 class="text-5xl md:text-7xl font-black text-red-700 mb-4 text-center">YOU DIED</h1>
             <p id="final-score" class="text-xl md:text-3xl text-white mb-10">Total Skor: $0</p>
-            <button onclick="location.reload()" class="hex-button relative !static w-64">RESPAWN</button>
+            <button onclick="resetToMenu()" class="hex-button relative !static w-64">RESPAWN</button>
         </div>
     </div>
 
@@ -268,6 +268,32 @@
             nextQuestion();
         }
 
+        function resetToMenu() {
+            // Reset variables
+            score = 0;
+            lives = 3;
+            currentIndex = 0;
+            isGameActive = false;
+            
+            // Clear any active intervals
+            clearInterval(timerInterval);
+            clearInterval(movementInterval);
+            
+            // Reset UI components
+            document.getElementById('score-text').innerText = `CASH: $0`;
+            updateLivesUI();
+            document.getElementById('countdown-text').innerText = "15.00";
+            document.getElementById('countdown-text').classList.remove('critical-time');
+            document.getElementById('timer-bar').style.width = '100%';
+            document.getElementById('chaos-arena').innerHTML = '';
+            
+            // Toggle screens
+            document.getElementById('game-over').classList.add('hidden');
+            document.getElementById('game-ui').classList.add('hidden');
+            document.getElementById('timer-ui').classList.add('hidden');
+            document.getElementById('menu').classList.remove('hidden');
+        }
+
         function nextQuestion() {
             if (currentIndex >= currentQuestions.length || lives <= 0) {
                 gameOver();
@@ -292,7 +318,6 @@
                 document.getElementById('score-text').innerText = `CASH: $${score.toLocaleString()}`;
             }
 
-            // Kecepatan gerak tombol disesuaikan berdasarkan ukuran layar
             const speedFactor = window.innerWidth < 768 ? 5 : 8;
 
             qData.a.forEach((text, idx) => {
@@ -300,7 +325,6 @@
                 btn.className = 'hex-button pointer-events-auto';
                 btn.innerHTML = text;
                 
-                // Masukkan ke DOM dulu untuk mendapatkan dimensinya
                 document.getElementById('chaos-arena').appendChild(btn);
                 const rect = btn.getBoundingClientRect();
                 
@@ -358,11 +382,9 @@
                     b.pos.x += b.pos.vx;
                     b.pos.y += b.pos.vy;
 
-                    // Pantulan dinding yang lebih presisi
                     if (b.pos.x <= 0 || b.pos.x >= window.innerWidth - b.pos.width) b.pos.vx *= -1;
                     if (b.pos.y <= 0 || b.pos.y >= window.innerHeight - b.pos.height) b.pos.vy *= -1;
 
-                    // Batas pengaman koordinat
                     b.pos.x = Math.max(0, Math.min(b.pos.x, window.innerWidth - b.pos.width));
                     b.pos.y = Math.max(0, Math.min(b.pos.y, window.innerHeight - b.pos.height));
 
@@ -422,6 +444,7 @@
             const lText = document.getElementById('lives-text');
             lText.innerText = `LIVES: ${lives}`;
             if (lives <= 1) lText.classList.add('critical-time');
+            else lText.classList.remove('critical-time');
         }
 
         function gameOver() {
@@ -434,7 +457,6 @@
             document.getElementById('final-score').innerText = `Total Hadiah: $${score.toLocaleString()}`;
         }
 
-        // Handle resize to keep buttons in bounds
         window.onresize = () => {
             if (isGameActive) {
                 answerButtons.forEach(b => {
