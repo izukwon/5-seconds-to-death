@@ -150,6 +150,12 @@
             animation: shake 0.5s infinite;
             color: red !important;
         }
+
+        .hidden-target {
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .hidden-target:active { opacity: 0.5; }
     </style>
 </head>
 <body>
@@ -185,7 +191,7 @@
             <div id="question" class="question-box"></div>
 
             <div id="chaos-arena" class="w-full h-full absolute inset-0 pointer-events-none">
-                <!-- Tombol bergerak akan muncul di sini -->
+                <!-- Tombol bergerak -->
             </div>
         </div>
 
@@ -209,7 +215,27 @@
                 { q: "Apa nama kota di serial 'Stranger Things'?", a: ["Hawkins", "Derry", "Riverdale", "Sunnydale"], c: 0 },
                 { q: "Berapa jumlah total 'Game of Thrones' season?", a: ["6", "7", "8", "9"], c: 2 },
                 { q: "Drama Korea 'Moving' tayang di platform apa?", a: ["Netflix", "Disney+", "Viu", "Prime"], c: 1 },
-                { q: "Serial 'The Bear' fokus pada profesi apa?", a: ["Chef", "Polisi", "Dokter", "Pengacara"], c: 0 }
+                { q: "Serial 'The Bear' fokus pada profesi apa?", a: ["Chef", "Polisi", "Dokter", "Pengacara"], c: 0 },
+                { q: "Apa nama naga milik Daenerys yang paling besar?", a: ["Drogon", "Viserion", "Rhaegal", "Balerion"], c: 0 },
+                { q: "Siapa pembunuh asli di serial 'Stranger Things' Season 4?", a: ["Vecna", "Demogorgon", "Mind Flayer", "Brenner"], c: 0 },
+                { q: "Better Call Saul adalah spin-off dari serial apa?", a: ["Breaking Bad", "Narcos", "Ozark", "The Wire"], c: 0 },
+                { q: "Apa nama perusahaan fiktif di 'Succession'?", a: ["Waystar Royco", "E Corp", "Pied Piper", "Hooli"], c: 0 },
+                { q: "Siapa karakter utama di 'One Piece' live action?", a: ["Monkey D. Luffy", "Zoro", "Nami", "Usopp"], c: 0 },
+                { q: "Serial Netflix 'Dark' berasal dari negara mana?", a: ["Jerman", "Spanyol", "Prancis", "Denmark"], c: 0 },
+                { q: "Apa nama kapal di serial 'The Mandalorian'?", a: ["Razor Crest", "Millennium Falcon", "Slave I", "X-Wing"], c: 0 },
+                { q: "Siapa pemeran Geralt of Rivia di 'The Witcher' S1-S3?", a: ["Henry Cavill", "Liam Hemsworth", "Tom Hardy", "Jason Momoa"], c: 0 },
+                { q: "Serial 'The Crown' menceritakan tentang keluarga apa?", a: ["Kerajaan Inggris", "Kennedy", "Kardashian", "Romanov"], c: 0 },
+                { q: "Apa nama distrik utama di 'Hunger Games'?", a: ["Capitol", "Panem", "Distrik 12", "Distrik 13"], c: 0 },
+                { q: "Di serial 'Friends', apa pekerjaan Chandler Bing?", a: ["Data Analysis", "Chef", "Aktor", "Paleontologis"], c: 0 },
+                { q: "Siapa nama asli 'The Professor' di Money Heist?", a: ["Sergio", "Andres", "Anibal", "Paco"], c: 0 },
+                { q: "Serial 'Ted Lasso' bertema olahraga apa?", a: ["Sepak Bola", "Basket", "Baseball", "Tenis"], c: 0 },
+                { q: "Apa nama kota tempat tinggal 'The Simpsons'?", a: ["Springfield", "Quahog", "South Park", "Shelbyville"], c: 0 },
+                { q: "Siapa pencipta serial 'Squid Game'?", a: ["Hwang Dong-hyuk", "Bong Joon-ho", "Park Chan-wook", "Lee Chang-dong"], c: 0 },
+                { q: "Apa warna kostum 'Power Rangers' pertama Tommy Oliver?", a: ["Hijau", "Putih", "Merah", "Hitam"], c: 0 },
+                { q: "Serial 'The Boys' menceritakan tentang apa?", a: ["Superhero Korup", "Detektif Anak", "Grup Band", "Mafia Italia"], c: 0 },
+                { q: "Apa nama sekolah di 'Sex Education'?", a: ["Moordale", "Riverdale", "Liberty High", "Las Encinas"], c: 0 },
+                { q: "Siapa pemeran utama serial 'Euphoria'?", a: ["Zendaya", "Sydney Sweeney", "Hunter Schafer", "Jacob Elordi"], c: 0 },
+                { q: "Serial 'Black Mirror' bertema tentang apa?", a: ["Teknologi Dystopia", "Horor Klasik", "Komedi Romantis", "Sejarah Dunia"], c: 0 }
             ],
             brands: [
                 { q: "Apa nama pendiri Microsoft?", a: ["Steve Jobs", "Bill Gates", "Elon Musk", "Mark Z."], c: 1 },
@@ -221,7 +247,27 @@
                 { q: "Mobil listrik Tesla didirikan oleh?", a: ["Elon Musk", "Jeff Bezos", "Larry Page", "Tim Cook"], c: 0 },
                 { q: "Aplikasi video pendek dari ByteDance?", a: ["SnackVideo", "TikTok", "Reels", "YouTube"], c: 1 },
                 { q: "Brand olahraga dengan logo 3 garis?", a: ["Nike", "Adidas", "Puma", "Reebok"], c: 1 },
-                { q: "Produsen ban yang juga memberikan rating restoran?", a: ["Bridgestone", "Michelin", "Dunlop", "Pirelli"], c: 1 }
+                { q: "Produsen ban yang memberikan rating restoran?", a: ["Bridgestone", "Michelin", "Dunlop", "Pirelli"], c: 1 },
+                { q: "Perusahaan induk dari Google adalah?", a: ["Alphabet", "Meta", "Amazon", "Tesla"], c: 0 },
+                { q: "Apa nama sistem operasi smartphone milik Apple?", a: ["iOS", "Android", "Windows", "HarmonyOS"], c: 0 },
+                { q: "Brand kopi yang berasal dari Seattle, AS?", a: ["Starbucks", "Dunkin", "Costa", "Luwak"], c: 0 },
+                { q: "Apa warna dominan logo Ferrari?", a: ["Merah", "Kuning", "Hitam", "Biru"], c: 0 },
+                { q: "Brand mie instan paling populer di Indonesia?", a: ["Indomie", "Sedaap", "Sarimi", "Supermi"], c: 0 },
+                { q: "Perusahaan raksasa e-commerce milik Jeff Bezos?", a: ["Amazon", "Alibaba", "eBay", "Shopee"], c: 0 },
+                { q: "Apa produk utama dari brand 'Canon'?", a: ["Kamera", "Sepatu", "Jam", "Mobil"], c: 0 },
+                { q: "Brand kosmetik 'Fenty Beauty' milik siapa?", a: ["Rihanna", "Beyonce", "Selena Gomez", "Kylie Jenner"], c: 0 },
+                { q: "Logo brand apa yang berbentuk tanda centang?", a: ["Nike", "Adidas", "Reebok", "Puma"], c: 0 },
+                { q: "Apa nama layanan streaming musik milik Spotify?", a: ["Spotify", "Apple Music", "Joox", "Deezer"], c: 0 },
+                { q: "Negara asal brand furnitur IKEA?", a: ["Swedia", "Denmark", "Norwegia", "Finlandia"], c: 0 },
+                { q: "Apa singkatan dari brand otomotif BMW?", a: ["Bayerische Motoren Werke", "British Motor Works", "Best Motor World", "Berlin Motor Works"], c: 0 },
+                { q: "Perusahaan mana yang memproduksi konsol Switch?", a: ["Nintendo", "Sony", "Microsoft", "Sega"], c: 0 },
+                { q: "Apa nama asisten virtual buatan Amazon?", a: ["Alexa", "Siri", "Cortana", "Bixby"], c: 0 },
+                { q: "Brand fashion 'Zara' berasal dari negara mana?", a: ["Spanyol", "Italia", "Prancis", "Jerman"], c: 0 },
+                { q: "Apa nama perusahaan game pembuat 'Fortnite'?", a: ["Epic Games", "Ubisoft", "EA", "Activision"], c: 0 },
+                { q: "Brand mewah yang logonya dua huruf G berhadapan?", a: ["Gucci", "Givency", "Goyard", "Gap"], c: 0 },
+                { q: "Apa nama platform pembayaran digital milik PayPal?", a: ["PayPal", "Stripe", "Venmo", "Payoneer"], c: 0 },
+                { q: "Brand mainan balok susun asal Denmark?", a: ["Lego", "Mattel", "Hasbro", "Barbie"], c: 0 },
+                { q: "Logo brand apa yang berbentuk apel digigit?", a: ["Apple", "Blackberry", "Orange", "Android"], c: 0 }
             ],
             history: [
                 { q: "Siapa penemu benua Amerika?", a: ["Vasco da Gama", "C. Columbus", "Magelhaens", "Marco Polo"], c: 1 },
@@ -233,7 +279,27 @@
                 { q: "Perang Diponegoro berakhir pada tahun?", a: ["1825", "1830", "1845", "1850"], c: 1 },
                 { q: "Siapa presiden wanita pertama di dunia?", a: ["Megawati", "S. Bandaranaike", "Indira Gandhi", "Corazon Aquino"], c: 1 },
                 { q: "Kapan Tembok Cina mulai dibangun?", a: ["Dinasti Qin", "Dinasti Han", "Dinasti Ming", "Dinasti Tang"], c: 0 },
-                { q: "Nama asli Pangeran Diponegoro?", a: ["Antasari", "Mustahar", "Ontowiryo", "Surapati"], c: 2 }
+                { q: "Nama asli Pangeran Diponegoro?", a: ["Antasari", "Mustahar", "Ontowiryo", "Surapati"], c: 2 },
+                { q: "Kapan Perang Dunia I dimulai?", a: ["1914", "1918", "1939", "1945"], c: 0 },
+                { q: "Siapa penemu lampu pijar?", a: ["Thomas Edison", "Nikola Tesla", "Einstein", "Newton"], c: 0 },
+                { q: "Apa nama kapal yang tenggelam tahun 1912?", a: ["Titanic", "Britannic", "Olympic", "Lusitania"], c: 0 },
+                { q: "Siapa tokoh yang menjahit bendera Merah Putih?", a: ["Fatmawati", "Kartini", "Cut Nyak Dien", "Megawati"], c: 0 },
+                { q: "Negara mana yang menjatuhkan bom di Hiroshima?", a: ["Amerika Serikat", "Jerman", "Inggris", "Uni Soviet"], c: 0 },
+                { q: "Siapa penemu mesin cetak pertama?", a: ["Johannes Gutenberg", "James Watt", "Alexander Bell", "Galileo"], c: 0 },
+                { q: "Tahun berapa Uni Soviet runtuh?", a: ["1991", "1989", "1995", "2000"], c: 0 },
+                { q: "Apa nama perjanjian kemerdekaan RI dengan Belanda?", a: ["Linggarjati", "Renville", "Roem-Royen", "KMB"], c: 3 },
+                { q: "Siapa kaisar pertama Romawi?", a: ["Augustus", "Julius Caesar", "Nero", "Caligula"], c: 0 },
+                { q: "Di mana letak Candi Borobudur?", a: ["Magelang", "Yogyakarta", "Solo", "Semarang"], c: 0 },
+                { q: "Siapa manusia pertama di ruang angkasa?", a: ["Yuri Gagarin", "Neil Armstrong", "Buzz Aldrin", "John Glenn"], c: 0 },
+                { q: "Apa nama perang antara AS dan Uni Soviet (1947-1991)?", a: ["Perang Dingin", "Perang Teluk", "Perang Saudara", "Perang Vietnam"], c: 0 },
+                { q: "Revolusi Perancis dimulai pada tahun?", a: ["1789", "1776", "1804", "1815"], c: 0 },
+                { q: "Siapa penulis naskah proklamasi Indonesia?", a: ["Sayuti Melik", "Soekarno", "Moh Hatta", "Ahmad Soebardjo"], c: 0 },
+                { q: "Kerajaan Islam pertama di Indonesia?", a: ["Samudera Pasai", "Demak", "Mataram", "Aceh"], c: 0 },
+                { q: "Siapa penemu benua Australia?", a: ["James Cook", "Marco Polo", "Vasco da Gama", "Amerigo Vespucci"], c: 0 },
+                { q: "Apa nama bom atom yang dijatuhkan di Nagasaki?", a: ["Fat Man", "Little Boy", "Big Boy", "Tsar Bomba"], c: 0 },
+                { q: "Tahun berapa Sumpah Pemuda dibacakan?", a: ["1928", "1920", "1930", "1945"], c: 0 },
+                { q: "Siapa perdana menteri pertama Inggris wanita?", a: ["Margaret Thatcher", "Theresa May", "Elizabeth II", "Diana"], c: 0 },
+                { q: "Apa nama mata uang kuno Kerajaan Majapahit?", a: ["Gobog", "Rupiah", "Gulden", "Yen"], c: 0 }
             ],
             logic: [
                 { q: "Ada berapa huruf 'f' dalam 'Fifteen Seconds to Death'?", a: ["0", "1", "2", "3"], c: 1 },
@@ -245,7 +311,27 @@
                 { q: "Ibu Budi punya 3 anak: Ali, Abi, dan...?", a: ["Budi", "Abu", "Ari", "Cici"], c: 0 },
                 { q: "Berapa banyak angka 9 dari 1 sampai 100?", a: ["10", "11", "20", "21"], c: 2 },
                 { q: "Pencet kata 'MATI' untuk selamat.", a: ["Selamat", "Mati", "Hidup", "Kabur"], c: 1 },
-                { q: "Coba klik kata 'Skor' di layar.", a: ["Klik", "Ini", "Salah", "Coba"], hidden: "Skor" }
+                { q: "Coba klik kata 'Skor' di layar.", a: ["Klik", "Ini", "Salah", "Coba"], hidden: "Skor" },
+                { q: "Ada berapa banyak air dalam gelas kosong?", a: ["Penuh", "Setengah", "Tidak Ada", "Sedikit"], c: 2 },
+                { q: "Apa yang pecah saat kamu menyebut namanya?", a: ["Kaca", "Hati", "Kesunyian", "Janji"], c: 2 },
+                { q: "Jika sebuah kereta listrik melaju ke utara, asapnya ke mana?", a: ["Selatan", "Timur", "Barat", "Tidak Ada"], c: 3 },
+                { q: "Siapa ayah dari saudara perempuanmu?", a: ["Kakek", "Paman", "Ayah", "Abang"], c: 2 },
+                { q: "Mana yang lebih berat: 1kg Besi atau 1kg Kapas?", a: ["Besi", "Kapas", "Sama Saja", "Tidak Tahu"], c: 2 },
+                { q: "Ada berapa angka nol dalam satu juta?", a: ["5", "6", "7", "8"], c: 1 },
+                { q: "Seekor merak bertelur di atas atap, telurnya jatuh ke mana?", a: ["Kanan", "Kiri", "Pecah", "Merak Tidak Bertelur"], c: 3 },
+                { q: "Apa yang naik tapi tidak pernah turun?", a: ["Balon", "Umur", "Asap", "Harga"], c: 1 },
+                { q: "Memiliki ekor tapi tidak memiliki tubuh. Apakah itu?", a: ["Ular", "Koin", "Layangan", "Bayangan"], c: 1 },
+                { q: "Memiliki mata tapi tidak bisa melihat. Apakah itu?", a: ["Kentang", "Jarum", "Badai", "Semua Benar"], c: 3 },
+                { q: "Dalam balap lari, jika kamu menyalip orang terakhir, kamu posisi berapa?", a: ["Terakhir", "Kedua Terakhir", "Pertama", "Mustahil"], c: 3 },
+                { q: "Pencet huruf 'L' pada tulisan 'LIVES' di kiri atas.", a: ["Klik", "Sini", "Salah", "Nggak Ada"], hidden: "Lives" },
+                { q: "Pencet tanda titik '.' pada timer di atas.", a: ["Pencet", "Titik", "Mana", "Susah"], hidden: "TimerDot" },
+                { q: "Berapa hasil dari 1 + 1 x 0?", a: ["0", "1", "2", "3"], c: 1 },
+                { q: "Apa nama game ini?", a: ["Millionaire", "Trivia Chaos", "15 Seconds to Death", "5 Seconds"], c: 2 },
+                { q: "Klik tulisan 'CASH' di kanan atas.", a: ["Duit", "Kaya", "Salah", "Uang"], hidden: "Cash" },
+                { q: "Warna label Skor adalah...", a: ["Merah", "Emas", "Biru", "Putih"], c: 1 },
+                { q: "Apa kebalikan dari 'Mati'?", a: ["Lahir", "Hidup", "Bangkit", "Makan"], c: 1 },
+                { q: "Klik angka '1' di timer atas.", a: ["Satu", "Dua", "Klik", "Mana"], hidden: "TimerOne" },
+                { q: "Siapa kakek dari cucu Andra?", a: ["Ayah Andra", "Andra", "Anak Andra", "Cucu Andra"], c: 1 }
             ]
         };
 
@@ -259,39 +345,62 @@
         let answerButtons = [];
         let isGameActive = false;
 
+        // Inisialisasi awal saat halaman dimuat
+        window.onload = function() {
+            resetToMenu();
+        };
+
         function startGame(category) {
             currentQuestions = [...triviaData[category]].sort(() => Math.random() - 0.5);
             document.getElementById('menu').classList.add('hidden');
             document.getElementById('game-ui').classList.remove('hidden');
             document.getElementById('timer-ui').classList.remove('hidden');
+            document.getElementById('game-over').classList.add('hidden');
             isGameActive = true;
             nextQuestion();
         }
 
         function resetToMenu() {
-            // Reset variables
+            // Reset Data
             score = 0;
             lives = 3;
             currentIndex = 0;
             isGameActive = false;
             
-            // Clear any active intervals
+            // Hentikan semua timer
             clearInterval(timerInterval);
             clearInterval(movementInterval);
             
-            // Reset UI components
-            document.getElementById('score-text').innerText = `CASH: $0`;
-            updateLivesUI();
-            document.getElementById('countdown-text').innerText = "15.00";
-            document.getElementById('countdown-text').classList.remove('critical-time');
-            document.getElementById('timer-bar').style.width = '100%';
-            document.getElementById('chaos-arena').innerHTML = '';
+            // Atur Tampilan Awal Secara Tegas
+            const menu = document.getElementById('menu');
+            const gameUi = document.getElementById('game-ui');
+            const timerUi = document.getElementById('timer-ui');
+            const gameOver = document.getElementById('game-over');
+            const arena = document.getElementById('chaos-arena');
+
+            if (menu) menu.classList.remove('hidden');
+            if (gameUi) gameUi.classList.add('hidden');
+            if (timerUi) timerUi.classList.add('hidden');
+            if (gameOver) gameOver.classList.add('hidden');
+            if (arena) arena.innerHTML = '';
             
-            // Toggle screens
-            document.getElementById('game-over').classList.add('hidden');
-            document.getElementById('game-ui').classList.add('hidden');
-            document.getElementById('timer-ui').classList.add('hidden');
-            document.getElementById('menu').classList.remove('hidden');
+            // Update UI teks
+            const scoreText = document.getElementById('score-text');
+            const livesText = document.getElementById('lives-text');
+            if (scoreText) scoreText.innerHTML = `CASH: $0`;
+            if (livesText) {
+                livesText.innerText = `LIVES: 3`;
+                livesText.classList.remove('critical-time');
+            }
+            
+            const countdownText = document.getElementById('countdown-text');
+            if (countdownText) {
+                countdownText.innerText = "15.00";
+                countdownText.classList.remove('critical-time');
+            }
+            
+            const timerBar = document.getElementById('timer-bar');
+            if (timerBar) timerBar.style.width = '100%';
         }
 
         function nextQuestion() {
@@ -310,12 +419,24 @@
             
             if (qData.hidden) {
                 qBox.innerHTML = qData.q;
-                if (qData.hidden === "Skor") {
-                    document.getElementById('score-text').innerHTML = `CASH: <span onclick="handleCorrectClick()" class="cursor-pointer text-white underline">$${score.toLocaleString()}</span>`;
+                
+                document.getElementById('lives-text').innerHTML = `LIVES: ${lives}`;
+                document.getElementById('score-text').innerHTML = `CASH: $${score.toLocaleString()}`;
+                document.getElementById('countdown-text').innerHTML = "15.00";
+
+                if (qData.hidden === "Skor" || qData.hidden === "Cash") {
+                    document.getElementById('score-text').innerHTML = `CASH: <span onclick="handleCorrectClick()" class="hidden-target text-white underline font-bold">$${score.toLocaleString()}</span>`;
+                } else if (qData.hidden === "Lives") {
+                    document.getElementById('lives-text').innerHTML = `<span onclick="handleCorrectClick()" class="hidden-target text-white underline font-bold">L</span>IVES: ${lives}`;
+                } else if (qData.hidden === "TimerDot") {
+                    document.getElementById('countdown-text').innerHTML = `15<span onclick="handleCorrectClick()" class="hidden-target text-red-500 underline font-bold">.</span>00`;
+                } else if (qData.hidden === "TimerOne") {
+                    document.getElementById('countdown-text').innerHTML = `<span onclick="handleCorrectClick()" class="hidden-target text-red-500 underline font-bold">1</span>5.00`;
                 }
             } else {
                 qBox.innerText = qData.q;
                 document.getElementById('score-text').innerText = `CASH: $${score.toLocaleString()}`;
+                document.getElementById('lives-text').innerText = `LIVES: ${lives}`;
             }
 
             const speedFactor = window.innerWidth < 768 ? 5 : 8;
@@ -361,12 +482,16 @@
                 const bar = document.getElementById('timer-bar');
                 const txt = document.getElementById('countdown-text');
                 
-                bar.style.width = (timeLeft / 15) + '%';
-                txt.innerText = (timeLeft / 100).toFixed(2);
+                if (bar) bar.style.width = (timeLeft / 15) + '%';
+                
+                const qData = currentQuestions[currentIndex];
+                if (txt && (!qData || !qData.hidden || (qData.hidden !== "TimerDot" && qData.hidden !== "TimerOne"))) {
+                    txt.innerText = (timeLeft / 100).toFixed(2);
+                }
 
-                if (timeLeft < 300) { 
+                if (txt && timeLeft < 300) { 
                     txt.classList.add('critical-time');
-                } else {
+                } else if (txt) {
                     txt.classList.remove('critical-time');
                 }
 
@@ -429,7 +554,7 @@
             updateLivesUI();
             
             const qBox = document.getElementById('question');
-            qBox.innerHTML = "<span class='text-red-500'>WAKTU HABIS!</span>";
+            if (qBox) qBox.innerHTML = "<span class='text-red-500'>WAKTU HABIS!</span>";
 
             setTimeout(() => {
                 if (lives <= 0) gameOver();
@@ -442,19 +567,27 @@
 
         function updateLivesUI() {
             const lText = document.getElementById('lives-text');
-            lText.innerText = `LIVES: ${lives}`;
-            if (lives <= 1) lText.classList.add('critical-time');
-            else lText.classList.remove('critical-time');
+            if (lText) {
+                lText.innerText = `LIVES: ${lives}`;
+                if (lives <= 1) lText.classList.add('critical-time');
+                else lText.classList.remove('critical-time');
+            }
         }
 
         function gameOver() {
             isGameActive = false;
             clearInterval(timerInterval);
             clearInterval(movementInterval);
-            document.getElementById('game-ui').classList.add('hidden');
-            document.getElementById('timer-ui').classList.add('hidden');
-            document.getElementById('game-over').classList.remove('hidden');
-            document.getElementById('final-score').innerText = `Total Hadiah: $${score.toLocaleString()}`;
+            
+            const gameUi = document.getElementById('game-ui');
+            const timerUi = document.getElementById('timer-ui');
+            const gameOverScreen = document.getElementById('game-over');
+            const finalScore = document.getElementById('final-score');
+
+            if (gameUi) gameUi.classList.add('hidden');
+            if (timerUi) timerUi.classList.add('hidden');
+            if (gameOverScreen) gameOverScreen.classList.remove('hidden');
+            if (finalScore) finalScore.innerText = `Total Skor: $${score.toLocaleString()}`;
         }
 
         window.onresize = () => {
